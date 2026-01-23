@@ -168,7 +168,25 @@ ON CONFLICT (sale_date) DO UPDATE SET
 
 ---
 
-### ✅ Data Quality Checks
+![Quality Checks](screenshots/quality_checks.png)
+
+---
+
+## 🚀 How to Run Locally
+
+```bash
+docker compose up -d
+
+Access Airflow UI at:
+
+http://localhost:8080
+
+Default login:
+
+Username: airflow
+Password: airflow
+
+### ✅ Data Quality Checks/Queries to Run
 
 -- Raw row count check
 SELECT COUNT(*) FROM raw.sales;
@@ -192,21 +210,3 @@ FROM staging.sales_clean
 WHERE quantity <= 0
    OR price <= 0
    OR total_amount <= 0;
-
-![Quality Checks](screenshots/quality_checks.png)
-
----
-
-## 🚀 How to Run Locally
-
-```bash
-docker compose up -d
-
-Access Airflow UI at:
-
-http://localhost:8080
-
-Default login:
-
-Username: airflow
-Password: airflow
