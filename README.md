@@ -91,3 +91,12 @@ This DAG runs daily and performs the following steps:
 
 ```bash
 docker compose up -d
+
+Access Airflow UI at:
+
+http://localhost:8080
+
+Default login:
+
+Username: airflow
+Password: airflow
