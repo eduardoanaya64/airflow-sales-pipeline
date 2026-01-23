@@ -117,16 +117,15 @@ ON CONFLICT (id) DO UPDATE SET
 
 ### Purpose:
 
-Standardizes product names
+- Standardizes product names
+- Adds a calculated column (total_amount)
+- Keeps pipeline idempotent using ON CONFLICT   
 
-Adds a calculated column (total_amount)
-
-Keeps pipeline idempotent using ON CONFLICT    
 ![Staging Table](screenshots/staging_table.png)
 
 ---
 
-### Mart Layer
+## Mart Layer
 
 ### Mart Layer (Aggregated Reporting Table)
 
