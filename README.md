@@ -65,7 +65,6 @@ This DAG runs daily and performs the following steps:
 
 ### Raw Layer
 
-```sql
 CREATE SCHEMA IF NOT EXISTS raw;
 
 CREATE TABLE IF NOT EXISTS raw.sales (
