@@ -65,7 +65,7 @@ This DAG runs daily and performs the following steps:
 
 ### Raw Layer
 
-'''md
+```md
 ```sql
 CREATE SCHEMA IF NOT EXISTS raw;
 
@@ -86,6 +86,8 @@ CREATE TABLE IF NOT EXISTS raw.sales (
 ## Staging Layer
 
 ### Staging Layer (Cleaned + Enriched)
+```md
+```sql
 CREATE SCHEMA IF NOT EXISTS staging;
 
 CREATE TABLE IF NOT EXISTS staging.sales_clean (
@@ -100,6 +102,8 @@ CREATE TABLE IF NOT EXISTS staging.sales_clean (
 
 ### Upsert from Raw → Staging
 
+```md
+```sql
 INSERT INTO staging.sales_clean (id, sale_date, product, quantity, price, total_amount)
 SELECT
     s.id,
@@ -131,6 +135,8 @@ ON CONFLICT (id) DO UPDATE SET
 
 ### Mart Layer (Aggregated Reporting Table)
 
+```md
+```sql
 CREATE SCHEMA IF NOT EXISTS mart;
 
 CREATE TABLE IF NOT EXISTS mart.daily_sales_summary (
@@ -144,6 +150,8 @@ CREATE TABLE IF NOT EXISTS mart.daily_sales_summary (
 
 ### Upsert Daily Aggregates
 
+```md
+```sql
 INSERT INTO mart.daily_sales_summary (
     sale_date, total_orders, total_quantity, total_revenue, avg_order_value
 )
