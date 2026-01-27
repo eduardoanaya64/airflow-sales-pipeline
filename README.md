@@ -63,13 +63,8 @@ This DAG runs daily and performs the following steps:
 
 ## 📊 Data Layers
 
----
+### Raw Layer
 
-## Raw Layer
-
-![Raw Table](screenshots/raw_table.png)
-
-```sql
 CREATE SCHEMA IF NOT EXISTS raw;
 
 CREATE TABLE IF NOT EXISTS raw.sales (
@@ -193,12 +188,10 @@ Password: airflow
 ### ✅ Data Quality Checks/Queries to Run
 
 -- Raw row count check
-SELECT COUNT(*) 
-FROM raw.sales;
+SELECT COUNT(*) FROM raw.sales;
 
 -- Staging row count check
-SELECT COUNT(*) 
-FROM staging.sales_clean;
+SELECT COUNT(*) FROM staging.sales_clean;
 
 -- Mart row existence check for today
 SELECT COUNT(*)
