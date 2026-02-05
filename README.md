@@ -65,6 +65,7 @@ This DAG runs daily and performs the following steps:
 
 ### Raw Layer
 
+```
 CREATE SCHEMA IF NOT EXISTS raw;
 
 CREATE TABLE IF NOT EXISTS raw.sales (
@@ -74,6 +75,7 @@ CREATE TABLE IF NOT EXISTS raw.sales (
     quantity INT NOT NULL,
     price NUMERIC NOT NULL
 );
+```
 
 ### Purpose: Stores incoming transactional sales data exactly as received (no transformations yet).
 
@@ -84,6 +86,8 @@ CREATE TABLE IF NOT EXISTS raw.sales (
 ## Staging Layer
 
 ### Staging Layer (Cleaned + Enriched)
+
+```
 CREATE SCHEMA IF NOT EXISTS staging;
 
 CREATE TABLE IF NOT EXISTS staging.sales_clean (
@@ -95,9 +99,11 @@ CREATE TABLE IF NOT EXISTS staging.sales_clean (
     total_amount NUMERIC NOT NULL,
     loaded_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+```
 
 ### Upsert from Raw → Staging
 
+```
 INSERT INTO staging.sales_clean (id, sale_date, product, quantity, price, total_amount)
 SELECT
     s.id,
@@ -114,6 +120,7 @@ ON CONFLICT (id) DO UPDATE SET
     price = EXCLUDED.price,
     total_amount = EXCLUDED.total_amount,
     loaded_at = NOW();
+```
 
 ### Purpose:
 
@@ -129,6 +136,7 @@ ON CONFLICT (id) DO UPDATE SET
 
 ### Mart Layer (Aggregated Reporting Table)
 
+```
 CREATE SCHEMA IF NOT EXISTS mart;
 
 CREATE TABLE IF NOT EXISTS mart.daily_sales_summary (
@@ -139,9 +147,11 @@ CREATE TABLE IF NOT EXISTS mart.daily_sales_summary (
     avg_order_value NUMERIC NOT NULL,
     loaded_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+```
 
 ### Upsert Daily Aggregates
 
+```
 INSERT INTO mart.daily_sales_summary (
     sale_date, total_orders, total_quantity, total_revenue, avg_order_value
 )
@@ -162,6 +172,7 @@ ON CONFLICT (sale_date) DO UPDATE SET
     total_revenue = EXCLUDED.total_revenue,
     avg_order_value = EXCLUDED.avg_order_value,
     loaded_at = NOW();
+```
 
 ![Mart Table](screenshots/mart_table.png)
 
